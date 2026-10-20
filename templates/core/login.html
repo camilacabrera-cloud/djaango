@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Iniciar Sesión - Shieldtech</title>
+    <style>
+        :root { --bg-color: #05050a; --card-bg: #0f172a; --accent-blue: #38bdf8; --accent-glow: #0284c7; --text-main: #f8fafc; --text-muted: #94a3b8; --border-color: #1e293b; --error-color: #f87171; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 40px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        h2 { color: var(--accent-blue); text-align: center; margin-bottom: 20px; }
+        p { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: var(--text-muted); }
+        input { width: 100%; padding: 10px; background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-main); box-sizing: border-box; }
+        input:focus { outline: none; border-color: var(--accent-blue); }
+        .errorlist { color: var(--error-color); font-size: 0.85rem; list-style: none; padding: 0; margin-top: 5px; }
+        .btn { width: 100%; background-color: var(--accent-blue); color: var(--bg-color); padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .btn:hover { background-color: var(--accent-glow); }
+        .links { text-align: center; margin-top: 20px; }
+        .links a { color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Iniciar Sesión</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn">Ingresar</button>
+        </form>
+        <div class="links">
+            <a href="{% url 'register' %}">¿No tienes cuenta? Regístrate</a><br><br>
+            <a href="{% url 'home' %}">← Volver al inicio</a>
+        </div>
+    </div>
+</body>
+</html>

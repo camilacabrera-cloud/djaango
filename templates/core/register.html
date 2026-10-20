@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - Shieldtech</title>
+    <style>
+        :root { --bg-color: #05050a; --card-bg: #0f172a; --accent-blue: #38bdf8; --accent-glow: #0284c7; --text-main: #f8fafc; --text-muted: #94a3b8; --border-color: #1e293b; --error-color: #f87171; }
+        body { background-color: var(--bg-color); color: var(--text-main); font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); padding: 40px; border-radius: 12px; width: 100%; max-width: 450px; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+        h2 { color: var(--accent-blue); text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; position: relative; }
+        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: var(--text-muted); }
+        input { width: 100%; padding: 10px; background-color: var(--bg-color); border: 1px solid var(--border-color); border-radius: 6px; color: var(--text-main); box-sizing: border-box; }
+        input:focus { outline: none; border-color: var(--accent-blue); }
+        
+        /* Estilo para los errores de Django */
+        .errorlist { color: var(--error-color); font-size: 0.85rem; list-style: none; padding: 0; margin-top: 5px; }
+        .errorlist li { background: rgba(248, 113, 113, 0.1); border-left: 3px solid var(--error-color); padding: 5px 10px; border-radius: 4px; margin-bottom: 4px; }
+        
+        /* Contenedor del campo de contraseña con el botón del ojito */
+        .password-wrapper { position: relative; display: flex; align-items: center; }
+        .password-wrapper input { padding-right: 40px; }
+        .toggle-password { position: absolute; right: 10px; background: none; border: none; cursor: pointer; color: var(--text-muted); font-size: 1.1rem; }
+        .toggle-password:hover { color: var(--accent-blue); }
+
+        .btn { width: 100%; background-color: var(--accent-blue); color: var(--bg-color); padding: 12px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+        .btn:hover { background-color: var(--accent-glow); }
+        .links { text-align: center; margin-top: 20px; }
+        .links a { color: var(--accent-blue); text-decoration: none; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Registro de Empresa</h2>
+        <form method="POST" novalidate>
+            {% csrf_token %}
+            
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    
+                    {% if field.name == 'password' %}
+                        <div class="password-wrapper">
+                            {{ field }}
+                            <button type="button" class="toggle-password" onclick="togglePassword()">👁️</button>
+                        </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn">Crear Cuenta y Ver Precios</button>
+        </form>
+        <div class="links">
+            <a href="{% url 'login' %}">¿Ya tienes cuenta? Inicia sesión</a><br><br>
+            <a href="{% url 'home' %}">← Volver al inicio</a>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('id_password');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+            } else {
+                passwordInput.type = 'password';
+            }
+        }
+    </script>
+</body>
+</html>
+
